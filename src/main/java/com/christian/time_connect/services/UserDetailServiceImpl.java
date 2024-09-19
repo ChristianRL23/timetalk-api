@@ -1,8 +1,11 @@
 package com.christian.time_connect.services;
 
+import com.christian.time_connect.dto.AuthCreateUserRequest;
 import com.christian.time_connect.dto.AuthLoginRequest;
 import com.christian.time_connect.dto.AuthResponse;
+import com.christian.time_connect.entities.RoleEntity;
 import com.christian.time_connect.entities.UserEntity;
+import com.christian.time_connect.repositories.RoleRepository;
 import com.christian.time_connect.repositories.UserRepository;
 import com.christian.time_connect.util.JwtUtils;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +23,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -28,6 +33,7 @@ public class UserDetailServiceImpl implements UserDetailsService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtUtils jwtUtils;
+    private final RoleRepository roleRepository;
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
@@ -52,6 +58,49 @@ public class UserDetailServiceImpl implements UserDetailsService {
                 userEntity.isAccountNoLocked(),
                 authorityList
         );
+    }
+
+    public AuthResponse createUser(AuthCreateUserRequest authCreateUserRequest) {
+        String firstName = authCreateUserRequest.firstName();
+        String lastName = authCreateUserRequest.lastName();
+        String email = authCreateUserRequest.email();
+        String password = authCreateUserRequest.password();
+        List<String> roleRequest = authCreateUserRequest.roleRequest().roleListName();
+
+        Set<RoleEntity> roleEntitySet = roleRepository.findRoleEntitiesByRoleEnumIn(roleRequest).stream().collect(Collectors.toSet());
+
+        if (roleEntitySet.isEmpty()) {
+            throw new IllegalArgumentException("The roles specified does not exist.");
+        }
+
+        UserEntity userEntity = UserEntity.builder()
+                .firstName(firstName)
+                .lastName(lastName)
+                .email(email)
+                .password(passwordEncoder.encode(password))
+                .roles(roleEntitySet)
+                .isEnabled(true)
+                .accountNoLocked(true)
+                .accountNoExpired(true)
+                .credentialNoExpired(true)
+                .build();
+
+        UserEntity userCreated = userRepository.save(userEntity);
+
+        ArrayList<SimpleGrantedAuthority> authorityList = new ArrayList<>();
+
+        userCreated.getRoles().forEach(role -> authorityList.add(new SimpleGrantedAuthority("ROLE_".concat(role.getRoleEnum().name()))));
+
+        userCreated.getRoles()
+                .stream()
+                .flatMap(role -> role.getPermissionList().stream())
+                .forEach(permission -> authorityList.add(new SimpleGrantedAuthority(permission.getName())));
+
+        Authentication authentication = new UsernamePasswordAuthenticationToken(userCreated.getEmail(), userCreated.getPassword(), authorityList);
+
+        String accessToken = jwtUtils.createToken(authentication);
+
+        return new AuthResponse(userCreated.getEmail(), "User created successfully", accessToken, true);
     }
 
     public AuthResponse loginUser(AuthLoginRequest authLoginRequest) {

@@ -1,5 +1,6 @@
 package com.christian.time_connect.controllers;
 
+import com.christian.time_connect.dto.AuthCreateUserRequest;
 import com.christian.time_connect.dto.AuthLoginRequest;
 import com.christian.time_connect.dto.AuthResponse;
 import com.christian.time_connect.services.UserDetailServiceImpl;
@@ -18,6 +19,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthController {
 
     private final UserDetailServiceImpl userDetailService;
+
+    @PostMapping("/signup")
+    public ResponseEntity<AuthResponse> signup(@RequestBody @Valid AuthCreateUserRequest userRequest) {
+        return new ResponseEntity<>(userDetailService.createUser(userRequest), HttpStatus.OK);
+    }
 
     @PostMapping("/login")
     public ResponseEntity<AuthResponse> login(@RequestBody @Valid AuthLoginRequest userRequest) {
