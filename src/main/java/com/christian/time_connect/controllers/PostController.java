@@ -2,6 +2,7 @@ package com.christian.time_connect.controllers;
 
 import com.christian.time_connect.dto.CommentRequest;
 import com.christian.time_connect.dto.PostRequest;
+import com.christian.time_connect.dto.PostResponse;
 import com.christian.time_connect.services.CommentService;
 import com.christian.time_connect.services.LikeService;
 import com.christian.time_connect.services.PostService;
@@ -11,6 +12,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/v1/posts")
 @RequiredArgsConstructor
@@ -19,6 +22,11 @@ public class PostController {
     private final PostService postService;
     private final LikeService likeService;
     private final CommentService commentService;
+
+    @GetMapping
+    public ResponseEntity<List<PostResponse>> getAllPosts() {
+        return new ResponseEntity<>(postService.getAllPosts(), HttpStatus.OK);
+    }
 
     @PostMapping
     public ResponseEntity<Long> createPost(@RequestBody PostRequest postRequest, Authentication authentication) {

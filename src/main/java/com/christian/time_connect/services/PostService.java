@@ -1,6 +1,7 @@
 package com.christian.time_connect.services;
 
 import com.christian.time_connect.dto.PostRequest;
+import com.christian.time_connect.dto.PostResponse;
 import com.christian.time_connect.entities.PostEntity;
 import com.christian.time_connect.entities.UserEntity;
 import com.christian.time_connect.mappers.PostMapper;
@@ -12,6 +13,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import java.net.URI;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -22,6 +25,13 @@ public class PostService {
     private final PostRepository postRepository;
     private final UserRepository userRepository;
 
+    public List<PostResponse> getAllPosts() {
+        List<PostEntity> posts = postRepository.findAll();
+
+        return posts.stream()
+                .map(postMapper::toPostResponse)
+                .toList();
+    }
 
     public Long createPost(PostRequest postRequest, Authentication connectedUser) {
         UserEntity user = userRepository.findUserEntityByEmail(connectedUser.getName())
