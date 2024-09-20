@@ -6,29 +6,27 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
+@AllArgsConstructor
+@NoArgsConstructor
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
 @Builder
 @Entity
-@Table(name = "posts")
+@Table(name = "comments")
 @EntityListeners(AuditingEntityListener.class)
-public class PostEntity {
+public class CommentEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToOne
+    @JoinColumn(name = "post_id")
+    private PostEntity post;
+    @ManyToOne
     @JoinColumn(name = "user_id")
     private UserEntity user;
     @CreatedDate
-    @Column(nullable = false, updatable = false)
-    private LocalDateTime createdDate;
-    private String description;
-    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<CommentEntity> comments;
-    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<LikeEntity> likes;
+    @Column(name = "creation_date")
+    private LocalDateTime creationDate;
+    private String content;
 }

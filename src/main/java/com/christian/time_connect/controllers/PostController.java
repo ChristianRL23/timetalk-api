@@ -1,6 +1,8 @@
 package com.christian.time_connect.controllers;
 
+import com.christian.time_connect.dto.CommentRequest;
 import com.christian.time_connect.dto.PostRequest;
+import com.christian.time_connect.services.CommentService;
 import com.christian.time_connect.services.LikeService;
 import com.christian.time_connect.services.PostService;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +18,7 @@ public class PostController {
 
     private final PostService postService;
     private final LikeService likeService;
+    private final CommentService commentService;
 
     @PostMapping
     public ResponseEntity<Long> createPost(@RequestBody PostRequest postRequest, Authentication authentication) {
@@ -27,5 +30,12 @@ public class PostController {
         return new ResponseEntity<>(likeService.addLikeToPost(postId, authentication), HttpStatus.OK);
     }
 
-
+    @PostMapping("/{postId}/comments")
+    public ResponseEntity<Long> addComment(
+            @PathVariable("postId") Long postId,
+            @RequestBody CommentRequest commentRequest,
+            Authentication authentication
+    ) {
+        return new ResponseEntity<>(commentService.createComment(postId, commentRequest, authentication), HttpStatus.CREATED);
+    }
 }
