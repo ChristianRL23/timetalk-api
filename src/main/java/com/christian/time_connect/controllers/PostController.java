@@ -3,6 +3,7 @@ package com.christian.time_connect.controllers;
 import com.christian.time_connect.dto.CommentRequest;
 import com.christian.time_connect.dto.PostRequest;
 import com.christian.time_connect.dto.PostResponse;
+import com.christian.time_connect.entities.PostEntity;
 import com.christian.time_connect.services.CommentService;
 import com.christian.time_connect.services.LikeService;
 import com.christian.time_connect.services.PostService;
@@ -45,5 +46,10 @@ public class PostController {
             Authentication authentication
     ) {
         return new ResponseEntity<>(commentService.createComment(postId, commentRequest, authentication), HttpStatus.CREATED);
+    }
+
+    @DeleteMapping("/{postId}")
+    public ResponseEntity<Long> deletePost(@PathVariable("postId") Long postId, Authentication authentication) {
+        return new ResponseEntity<>(postService.deletePost(postId, authentication), HttpStatus.OK);
     }
 }
