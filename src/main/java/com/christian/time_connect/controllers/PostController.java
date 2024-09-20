@@ -1,15 +1,13 @@
 package com.christian.time_connect.controllers;
 
 import com.christian.time_connect.dto.PostRequest;
+import com.christian.time_connect.services.LikeService;
 import com.christian.time_connect.services.PostService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/posts")
@@ -17,10 +15,16 @@ import org.springframework.web.bind.annotation.RestController;
 public class PostController {
 
     private final PostService postService;
+    private final LikeService likeService;
 
     @PostMapping
     public ResponseEntity<Long> createPost(@RequestBody PostRequest postRequest, Authentication authentication) {
         return new ResponseEntity<>(postService.createPost(postRequest, authentication), HttpStatus.CREATED);
+    }
+
+    @PostMapping("/{postId}/likes")
+    public ResponseEntity<Long> addLike(@PathVariable("postId") Long postId, Authentication authentication) {
+        return new ResponseEntity<>(likeService.addLikeToPost(postId, authentication), HttpStatus.OK);
     }
 
 
