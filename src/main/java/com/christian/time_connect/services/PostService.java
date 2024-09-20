@@ -15,7 +15,9 @@ import org.springframework.stereotype.Service;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 @Service
 @RequiredArgsConstructor
@@ -39,5 +41,36 @@ public class PostService {
         PostEntity post = postMapper.toPostEntity(postRequest);
         post.setUser(user);
         return postRepository.save(post).getId();
+    }
+
+    public Long deletePost(Long postId, Authentication authentication) {
+
+
+        UserEntity user = userRepository.findUserEntityByEmail(authentication.getName())
+                .orElseThrow(() -> new EntityNotFoundException("User not found"));
+
+        PostEntity postFound = user.getPosts().stream()
+                .filter(post -> Objects.equals(post.getId(), postId))
+                .findFirst()
+                .orElseThrow();
+        postRepository.deleteById(postFound.getId());
+        return postFound.getId();
+
+    }
+
+    public Long editPost(Long postId, PostRequest postRequest, Authentication connectedUser) {
+
+        UserEntity user = userRepository.findUserEntityByEmail(connectedUser.getName())
+                .orElseThrow(() -> new EntityNotFoundException("User not found."));
+
+        PostEntity postFound = user.getPosts().stream()
+                .filter(post -> Objects.equals(post.getId(), postId))
+                .findFirst()
+                .orElseThrow();
+
+        postRepository.updatePostDescriptionById(postRequest.description(), postFound.getId());
+
+        return postFound.getId();
+
     }
 }
