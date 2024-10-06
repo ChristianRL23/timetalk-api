@@ -111,14 +111,15 @@ public class UserDetailServiceImpl implements UserDetailsService {
     public AuthResponse loginUser(AuthLoginRequest authLoginRequest) {
         String userEmail = authLoginRequest.email();
         String userPassword = authLoginRequest.password();
-        UserDetails userDetails = loadUserByUsername(userEmail);
+        UserDetails userDetails = null;
 
-        if (userDetails == null) {
-            throw new BadCredentialsException("Invalid username.");
-        }
-
-        if (!passwordEncoder.matches(userPassword, userDetails.getPassword())) {
-            throw new BadCredentialsException("Invalid password");
+        if (userRepository.existsByEmail(userEmail)) {
+            userDetails = loadUserByUsername(userEmail);
+            if (!passwordEncoder.matches(userPassword, userDetails.getPassword())) {
+                throw new BadCredentialsException("The email or password is incorrect.");
+            }
+        } else {
+            throw new BadCredentialsException("The email or password is incorrect.");
         }
 
         Authentication authenticationToken = new UsernamePasswordAuthenticationToken(

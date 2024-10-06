@@ -4,6 +4,7 @@ import com.christian.time_connect.exceptions.EmailAlreadyExistsException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -41,6 +42,24 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ExceptionResponse> handleEmailAlreadyExists(EmailAlreadyExistsException exception, HttpServletRequest request) {
 
         HttpStatus httpStatus = HttpStatus.CONFLICT;
+
+        Set<String> errors = new HashSet<>();
+        errors.add(exception.getMessage());
+
+        return ResponseEntity
+                .status(httpStatus)
+                .body(ExceptionResponse.builder()
+                        .timestamp(LocalDateTime.now())
+                        .status(httpStatus.value())
+                        .error(httpStatus.getReasonPhrase())
+                        .errors(errors)
+                        .path(request.getRequestURI())
+                        .build());
+    }
+
+    @ExceptionHandler(BadCredentialsException.class)
+    public ResponseEntity<ExceptionResponse> handleBadCredentials(BadCredentialsException exception, HttpServletRequest request) {
+        HttpStatus httpStatus = HttpStatus.UNAUTHORIZED;
 
         Set<String> errors = new HashSet<>();
         errors.add(exception.getMessage());
