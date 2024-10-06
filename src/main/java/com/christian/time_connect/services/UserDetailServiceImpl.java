@@ -5,6 +5,7 @@ import com.christian.time_connect.dto.AuthLoginRequest;
 import com.christian.time_connect.dto.AuthResponse;
 import com.christian.time_connect.entities.RoleEntity;
 import com.christian.time_connect.entities.UserEntity;
+import com.christian.time_connect.exceptions.EmailAlreadyExistsException;
 import com.christian.time_connect.repositories.RoleRepository;
 import com.christian.time_connect.repositories.UserRepository;
 import com.christian.time_connect.util.JwtUtils;
@@ -66,6 +67,10 @@ public class UserDetailServiceImpl implements UserDetailsService {
         String email = authCreateUserRequest.email();
         String password = authCreateUserRequest.password();
         List<String> roleRequest = authCreateUserRequest.roleRequest().roleListName();
+
+        if (userRepository.existsByEmail(email)) {
+            throw new EmailAlreadyExistsException("The email is already in use");
+        }
 
         Set<RoleEntity> roleEntitySet = roleRepository.findRoleEntitiesByRoleEnumIn(roleRequest).stream().collect(Collectors.toSet());
 
