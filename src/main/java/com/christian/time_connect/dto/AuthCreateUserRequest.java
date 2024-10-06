@@ -19,6 +19,8 @@ public record AuthCreateUserRequest(
         @NotEmpty(message = "Password is mandatory")
         @NotBlank(message = "Password is mandatory")
         String password,
-        @Valid AuthCreateRoleRequest roleRequest
+        @NotNull(message = "Role is mandatory")
+        @Valid
+        AuthCreateRoleRequest roleRequest
 ) {
 }
