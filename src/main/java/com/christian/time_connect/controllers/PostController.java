@@ -40,6 +40,12 @@ public class PostController {
         return new ResponseEntity<>(likeService.addLikeToPost(postId, authentication), HttpStatus.OK);
     }
 
+    @DeleteMapping("/{postId}/like")
+    public ResponseEntity<Void> removeLike(@PathVariable("postId") Long postId, Authentication authentication) {
+        likeService.removeLike(postId, authentication);
+        return ResponseEntity.noContent().build();
+    }
+
     @PostMapping("/{postId}/comments")
     public ResponseEntity<CommentResponse> addComment(
             @PathVariable("postId") Long postId,

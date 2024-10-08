@@ -54,4 +54,20 @@ public class LikeService {
 
         return likeMapper.toLikeResponse(post);
     }
+
+    public void removeLike(Long postId, Authentication connectedUser) {
+        UserEntity user = userRepository.findUserEntityByEmail(connectedUser.getName())
+                .orElseThrow(() -> new EntityNotFoundException("User not found."));
+        PostEntity post = postRepository.findById(postId)
+                .orElseThrow(() -> new PostNotFoundException("The post does not exist."));
+
+        if(Objects.equals(post.getUser().getId(), user.getId())) {
+            throw new SelfInteractionException("You cannot perform this action on your own post.");
+        }
+
+        LikeEntity likeEntityFound = likeRepository.findLikeEntityByUserId(user.getId())
+                .orElseThrow(() -> new ActionNotAllowedException("You have not given a like to the post yet."));
+
+        likeRepository.delete(likeEntityFound);
+    }
 }
