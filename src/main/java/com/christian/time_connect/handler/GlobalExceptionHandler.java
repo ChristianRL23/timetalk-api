@@ -1,6 +1,7 @@
 package com.christian.time_connect.handler;
 
 import com.christian.time_connect.exceptions.EmailAlreadyExistsException;
+import com.christian.time_connect.exceptions.PostNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -60,6 +61,24 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(BadCredentialsException.class)
     public ResponseEntity<ExceptionResponse> handleBadCredentials(BadCredentialsException exception, HttpServletRequest request) {
         HttpStatus httpStatus = HttpStatus.UNAUTHORIZED;
+
+        Set<String> errors = new HashSet<>();
+        errors.add(exception.getMessage());
+
+        return ResponseEntity
+                .status(httpStatus)
+                .body(ExceptionResponse.builder()
+                        .timestamp(LocalDateTime.now())
+                        .status(httpStatus.value())
+                        .error(httpStatus.getReasonPhrase())
+                        .errors(errors)
+                        .path(request.getRequestURI())
+                        .build());
+    }
+
+    @ExceptionHandler(PostNotFoundException.class)
+    public ResponseEntity<ExceptionResponse> handlePostNotFound(PostNotFoundException exception, HttpServletRequest request) {
+        HttpStatus httpStatus = HttpStatus.NOT_FOUND;
 
         Set<String> errors = new HashSet<>();
         errors.add(exception.getMessage());
