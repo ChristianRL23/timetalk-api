@@ -1,7 +1,6 @@
 <h1 align="center">TimeTalk API</h1>
 
-*<p align="center">TimeTalk API is a RESTFul API created to be used on TimeTalk, a social network (currently in development)
-to ask questions, share experiences and make comments about watches.</p>*
+*<p align="center">TimeTalk API is a RESTFul API created to be used in a social network to ask questions, share experiences and make comments.</p>*
 
 <p float="left">
   <img src="/images/TimeTalk.png" width="700" >
