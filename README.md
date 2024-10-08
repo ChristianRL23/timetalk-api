@@ -6,14 +6,14 @@ The features of the API are the next:
 - Create an account
 - Login
 - CRUD operations:
-  - [Get all the posts](#get-posts)
-  - [Create a new post]()
-  - [Update an existing post]()
-  - [Delete a post]()
+  - [Get all the posts](#get-all-posts)
+  - [Create a new post](#create-post)
+  - [Update an existing post](#update-post)
+  - [Delete a post](#delete-post)
 - Additional operations:
-  - [Comment on a post]()
-  - [Give a like to a post]()
-  - [Remove like from post]()
+  - [Comment on a post](#comment-post)
+  - [Give a like to a post](#add-like-post)
+  - [Remove like from post](#remove-like-post)
 - Error handling (Exceptions)  
 
 
@@ -28,8 +28,7 @@ The features of the API are the next:
     - Docker
 
 ## Endpoints
-
-### <a name="get-posts"></a>Get all the posts
+### <a name="get-all-posts"></a>Get all the posts
 - **Method**: `GET`
 - **Route**: `/api/v1/posts`
 - **Description**: Returns all available posts. You must include a valid JWT in the `Authorization` header
@@ -82,7 +81,7 @@ of the request. For example: `Authorization: Bearer YOUR_JWT_TOKEN`
 ] 
 ```
 
-### <a name="get-posts"></a>Create a new post
+### <a name="create-post"></a>Create a new post
 - **Method**: `POST`
 - **Route**: `/api/v1/posts`
 - **Description**: Create a new post. You must include a valid JWT in the `Authorization` header
@@ -112,7 +111,7 @@ of the request. For example: `Authorization: Bearer YOUR_JWT_TOKEN`
 }
 ```
 
-### <a name="get-posts"></a>Update an existing post
+### <a name="update-post"></a>Update an existing post
 - **Method**: `PUT`
 - **Route**: `/api/v1/posts/{post-id}`
 - **Description**: Updates an existing post. The `{post-id}` parameter should be replaced with the ID of the post you want to update. You must include a valid JWT in the `Authorization` header
@@ -142,7 +141,7 @@ of the request. For example: `Authorization: Bearer YOUR_JWT_TOKEN`
 }
 ```
 
-### <a name="get-posts"></a>Delete a post
+### <a name="delete-post"></a>Delete a post
 - **Method**: `DELETE`
 - **Route**: `/api/v1/posts/{post-id}`
 - **Description**: Deletes an existing post. The `{post-id}` parameter should be replaced with the ID of the post you want to delete. You must include a valid JWT in the `Authorization` header
@@ -152,7 +151,7 @@ of the request. For example: `Authorization: Bearer YOUR_JWT_TOKEN`
     - **Status Code**: `204`
     - **Response Body**: None
 
-### <a name="get-posts"></a>Comment a post
+### <a name="comment-post"></a>Comment a post
 - **Method**: `POST`
 - **Route**: `/api/v1/posts/{post-id}/comments`
 - **Description**: Add a comment to an existing post. The `{post-id}` parameter should be replaced with the ID of the post you want to comment. You must include a valid JWT in the `Authorization` header
@@ -177,7 +176,7 @@ of the request. For example: `Authorization: Bearer YOUR_JWT_TOKEN`
 }
 ```
 
-### <a name="get-posts"></a>Give like to a post
+### <a name="add-like-post"></a>Give like to a post
 - **Method**: `POST`
 - **Route**: `/api/v1/posts/{post-id}/likes`
 - **Description**: Add a like to an existing post. The `{post-id}` parameter should be replaced with the ID of the post you want to give a like. You must include a valid JWT in the `Authorization` header
@@ -193,7 +192,7 @@ of the request. For example: `Authorization: Bearer YOUR_JWT_TOKEN`
 }
 ```
 
-### <a name="get-posts"></a>Remove like from a post
+### <a name="remove-like-post"></a>Remove like from a post
 - **Method**: `DELETE`
 - **Route**: `/api/v1/posts/{post-id}/likes`
 - **Description**: Remove a like from an existing post. The `{post-id}` parameter should be replaced with the ID of the post from which you want to remove the like. You must include a valid JWT in the `Authorization` header
