@@ -37,17 +37,11 @@ public class LikeService {
             throw new SelfInteractionException("You cannot perform this action on your own post.");
         }
 
+        boolean isLikeAlreadyGiven = likeRepository.findLikeEntityByUserId(user.getId()).isPresent();
 
-
-        /* TODO
-        boolean userHasAlreadyCommented = post.getLikes()
-                .stream()
-                .anyMatch(p -> Objects.equals(p.getUser().getId(), user.getId()));
-
-        if (userHasAlreadyCommented) {
+        if (isLikeAlreadyGiven) {
             throw new ActionNotAllowedException("You have already liked this post.");
         }
-         */
 
         LikeEntity likeEntity = likeMapper.toLikeEntity(user, post);
         likeRepository.save(likeEntity);
