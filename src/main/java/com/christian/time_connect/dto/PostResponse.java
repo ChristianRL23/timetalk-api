@@ -10,7 +10,8 @@ public record PostResponse(
         Long id,
         UserResponse author,
         LocalDateTime creationDate,
-        String content,
+        String title,
+        String description,
         List<LikeResponse> likes,
         List<CommentResponse> comments
 ) {

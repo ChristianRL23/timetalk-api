@@ -26,6 +26,7 @@ public class PostEntity {
     @CreatedDate
     @Column(nullable = false, updatable = false)
     private LocalDateTime createdDate;
+    private String title;
     private String description;
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<CommentEntity> comments;

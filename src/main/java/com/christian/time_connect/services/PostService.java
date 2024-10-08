@@ -35,12 +35,15 @@ public class PostService {
                 .toList();
     }
 
-    public Long createPost(PostRequest postRequest, Authentication connectedUser) {
+    public PostResponse createPost(PostRequest postRequest, Authentication connectedUser) {
         UserEntity user = userRepository.findUserEntityByEmail(connectedUser.getName())
                 .orElseThrow(() -> new EntityNotFoundException("User not found"));
         PostEntity post = postMapper.toPostEntity(postRequest);
         post.setUser(user);
-        return postRepository.save(post).getId();
+        post.setComments(new ArrayList<>());
+        post.setLikes(new ArrayList<>());
+        PostEntity postCreated = postRepository.save(post);
+        return postMapper.toPostResponse(postCreated);
     }
 
     public void deletePost(Long postId, Authentication authentication) {

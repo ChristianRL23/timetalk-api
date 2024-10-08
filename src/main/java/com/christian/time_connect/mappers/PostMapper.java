@@ -5,6 +5,7 @@ import com.christian.time_connect.entities.PostEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -17,7 +18,9 @@ public class PostMapper {
 
     public PostEntity toPostEntity(PostRequest postRequest) {
         return PostEntity.builder()
+                .title(postRequest.title())
                 .description(postRequest.description())
+                .comments(new ArrayList<>())
                 .build();
     }
 
@@ -37,6 +40,7 @@ public class PostMapper {
                 postEntity.getId(),
                 userMapper.toUserResponse(postEntity.getUser()),
                 postEntity.getCreatedDate(),
+                postEntity.getTitle(),
                 postEntity.getDescription(),
                 likeResponseList,
                 commentResponseList

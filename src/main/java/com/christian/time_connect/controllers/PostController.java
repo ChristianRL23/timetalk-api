@@ -8,6 +8,7 @@ import com.christian.time_connect.repositories.PostRepository;
 import com.christian.time_connect.services.CommentService;
 import com.christian.time_connect.services.LikeService;
 import com.christian.time_connect.services.PostService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,7 +33,7 @@ public class PostController {
     }
 
     @PostMapping
-    public ResponseEntity<Long> createPost(@RequestBody PostRequest postRequest, Authentication authentication) {
+    public ResponseEntity<PostResponse> createPost(@RequestBody @Valid PostRequest postRequest, Authentication authentication) {
         return new ResponseEntity<>(postService.createPost(postRequest, authentication), HttpStatus.CREATED);
     }
 
