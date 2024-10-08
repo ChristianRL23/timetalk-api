@@ -24,7 +24,6 @@ The features of the API are the next:
 - JWT
 - JPA/Hibernate
 - MySQL
-- Docker
 
 ## Endpoints
 
