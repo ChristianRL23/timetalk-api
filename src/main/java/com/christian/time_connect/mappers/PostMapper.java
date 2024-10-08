@@ -25,9 +25,9 @@ public class PostMapper {
     }
 
     public PostResponse toPostResponse(PostEntity postEntity) {
-        List<LikeResponse> likeResponseList = postEntity.getLikes()
+        List<PostIndividualLikeResponse> likeResponseList = postEntity.getLikes()
                 .stream()
-                .map(likeMapper::toLikeResponse)
+                .map(likeMapper::toPostIndividualLikeResponse)
                 .toList();
 
         List<CommentResponse> commentResponseList = postEntity.getComments()

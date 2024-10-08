@@ -1,9 +1,6 @@
 package com.christian.time_connect.controllers;
 
-import com.christian.time_connect.dto.CommentRequest;
-import com.christian.time_connect.dto.CommentResponse;
-import com.christian.time_connect.dto.PostRequest;
-import com.christian.time_connect.dto.PostResponse;
+import com.christian.time_connect.dto.*;
 import com.christian.time_connect.entities.PostEntity;
 import com.christian.time_connect.repositories.PostRepository;
 import com.christian.time_connect.services.CommentService;
@@ -38,8 +35,8 @@ public class PostController {
         return new ResponseEntity<>(postService.createPost(postRequest, authentication), HttpStatus.CREATED);
     }
 
-    @PostMapping("/{postId}/likes")
-    public ResponseEntity<Long> addLike(@PathVariable("postId") Long postId, Authentication authentication) {
+    @PostMapping("/{postId}/like")
+    public ResponseEntity<LikeResponse> addLike(@PathVariable("postId") Long postId, Authentication authentication) {
         return new ResponseEntity<>(likeService.addLikeToPost(postId, authentication), HttpStatus.OK);
     }
 

@@ -1,6 +1,7 @@
 package com.christian.time_connect.mappers;
 
 import com.christian.time_connect.dto.LikeResponse;
+import com.christian.time_connect.dto.PostIndividualLikeResponse;
 import com.christian.time_connect.entities.LikeEntity;
 import com.christian.time_connect.entities.PostEntity;
 import com.christian.time_connect.entities.UserEntity;
@@ -20,7 +21,11 @@ public class LikeMapper {
                 .build();
     }
 
-    public LikeResponse toLikeResponse(LikeEntity likeEntity) {
-        return new LikeResponse(userMapper.toUserResponse(likeEntity.getUser()));
+    public LikeResponse toLikeResponse(PostEntity postEntity) {
+        return new LikeResponse(postEntity.getId(), postEntity.getLikes().size());
+    }
+
+    public PostIndividualLikeResponse toPostIndividualLikeResponse(LikeEntity likeEntity) {
+        return new PostIndividualLikeResponse(userMapper.toUserResponse(likeEntity.getUser()));
     }
 }

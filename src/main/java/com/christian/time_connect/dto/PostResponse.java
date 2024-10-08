@@ -12,7 +12,7 @@ public record PostResponse(
         LocalDateTime creationDate,
         String title,
         String description,
-        List<LikeResponse> likes,
+        List<PostIndividualLikeResponse> likes,
         List<CommentResponse> comments
 ) {
 }
