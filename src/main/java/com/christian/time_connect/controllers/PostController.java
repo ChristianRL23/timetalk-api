@@ -35,12 +35,12 @@ public class PostController {
         return new ResponseEntity<>(postService.createPost(postRequest, authentication), HttpStatus.CREATED);
     }
 
-    @PostMapping("/{postId}/like")
+    @PostMapping("/{postId}/likes")
     public ResponseEntity<LikeResponse> addLike(@PathVariable("postId") Long postId, Authentication authentication) {
         return new ResponseEntity<>(likeService.addLikeToPost(postId, authentication), HttpStatus.OK);
     }
 
-    @DeleteMapping("/{postId}/like")
+    @DeleteMapping("/{postId}/likes")
     public ResponseEntity<Void> removeLike(@PathVariable("postId") Long postId, Authentication authentication) {
         likeService.removeLike(postId, authentication);
         return ResponseEntity.noContent().build();
