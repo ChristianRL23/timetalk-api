@@ -4,6 +4,7 @@ import com.christian.time_connect.dto.PostRequest;
 import com.christian.time_connect.dto.PostResponse;
 import com.christian.time_connect.entities.PostEntity;
 import com.christian.time_connect.entities.UserEntity;
+import com.christian.time_connect.exceptions.PostNotFoundException;
 import com.christian.time_connect.mappers.PostMapper;
 import com.christian.time_connect.repositories.PostRepository;
 import com.christian.time_connect.repositories.UserRepository;
@@ -29,7 +30,6 @@ public class PostService {
 
     public List<PostResponse> getAllPosts() {
         List<PostEntity> posts = postRepository.findAll();
-
         return posts.stream()
                 .map(postMapper::toPostResponse)
                 .toList();
@@ -43,19 +43,15 @@ public class PostService {
         return postRepository.save(post).getId();
     }
 
-    public Long deletePost(Long postId, Authentication authentication) {
-
-
+    public void deletePost(Long postId, Authentication authentication) {
         UserEntity user = userRepository.findUserEntityByEmail(authentication.getName())
                 .orElseThrow(() -> new EntityNotFoundException("User not found"));
 
         PostEntity postFound = user.getPosts().stream()
                 .filter(post -> Objects.equals(post.getId(), postId))
                 .findFirst()
-                .orElseThrow();
+                .orElseThrow(() -> new PostNotFoundException("The post does not exist"));
         postRepository.deleteById(postFound.getId());
-        return postFound.getId();
-
     }
 
     public Long editPost(Long postId, PostRequest postRequest, Authentication connectedUser) {
