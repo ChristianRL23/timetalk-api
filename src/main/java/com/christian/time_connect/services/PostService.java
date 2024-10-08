@@ -57,19 +57,20 @@ public class PostService {
         postRepository.deleteById(postFound.getId());
     }
 
-    public Long editPost(Long postId, PostRequest postRequest, Authentication connectedUser) {
-
+    public PostResponse editPost(Long postId, PostRequest postRequest, Authentication connectedUser) {
         UserEntity user = userRepository.findUserEntityByEmail(connectedUser.getName())
                 .orElseThrow(() -> new EntityNotFoundException("User not found."));
 
         PostEntity postFound = user.getPosts().stream()
                 .filter(post -> Objects.equals(post.getId(), postId))
                 .findFirst()
-                .orElseThrow();
+                .orElseThrow(() -> new PostNotFoundException("The post does not exist"));
 
-        postRepository.updatePostDescriptionById(postRequest.description(), postFound.getId());
+        postFound.setTitle(postRequest.title());
+        postFound.setDescription(postRequest.description());
 
-        return postFound.getId();
+        postRepository.save(postFound);
 
+        return postMapper.toPostResponse(postFound);
     }
 }

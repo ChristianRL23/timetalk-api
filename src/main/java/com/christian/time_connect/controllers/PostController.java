@@ -52,9 +52,9 @@ public class PostController {
     }
 
     @PutMapping("/{postId}")
-    public ResponseEntity<Long> modifyPost(
+    public ResponseEntity<PostResponse> modifyPost(
             @PathVariable Long postId,
-            @RequestBody PostRequest postRequest,
+            @RequestBody @Valid PostRequest postRequest,
             Authentication authentication
             ) {
         return new ResponseEntity<>(postService.editPost(postId, postRequest, authentication), HttpStatus.OK);
