@@ -1,7 +1,9 @@
 package com.christian.time_connect.handler;
 
+import com.christian.time_connect.exceptions.ActionNotAllowedException;
 import com.christian.time_connect.exceptions.EmailAlreadyExistsException;
 import com.christian.time_connect.exceptions.PostNotFoundException;
+import com.christian.time_connect.exceptions.SelfInteractionException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -79,6 +81,42 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(PostNotFoundException.class)
     public ResponseEntity<ExceptionResponse> handlePostNotFound(PostNotFoundException exception, HttpServletRequest request) {
         HttpStatus httpStatus = HttpStatus.NOT_FOUND;
+
+        Set<String> errors = new HashSet<>();
+        errors.add(exception.getMessage());
+
+        return ResponseEntity
+                .status(httpStatus)
+                .body(ExceptionResponse.builder()
+                        .timestamp(LocalDateTime.now())
+                        .status(httpStatus.value())
+                        .error(httpStatus.getReasonPhrase())
+                        .errors(errors)
+                        .path(request.getRequestURI())
+                        .build());
+    }
+
+    @ExceptionHandler(SelfInteractionException.class)
+    public ResponseEntity<ExceptionResponse> handleSelfInteraction(SelfInteractionException exception, HttpServletRequest request) {
+        HttpStatus httpStatus = HttpStatus.FORBIDDEN;
+
+        Set<String> errors = new HashSet<>();
+        errors.add(exception.getMessage());
+
+        return ResponseEntity
+                .status(httpStatus)
+                .body(ExceptionResponse.builder()
+                        .timestamp(LocalDateTime.now())
+                        .status(httpStatus.value())
+                        .error(httpStatus.getReasonPhrase())
+                        .errors(errors)
+                        .path(request.getRequestURI())
+                        .build());
+    }
+
+    @ExceptionHandler(ActionNotAllowedException.class)
+    public ResponseEntity<ExceptionResponse> handleActionNotAllowed(ActionNotAllowedException exception, HttpServletRequest request) {
+        HttpStatus httpStatus = HttpStatus.FORBIDDEN;
 
         Set<String> errors = new HashSet<>();
         errors.add(exception.getMessage());
