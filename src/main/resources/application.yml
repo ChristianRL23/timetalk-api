@@ -9,7 +9,7 @@ spring:
     password: password
     driver-class-name: com.mysql.cj.jdbc.Driver
   application:
-    name: time-connect
+    name: timetalk-api
 
 security:
   jwt:

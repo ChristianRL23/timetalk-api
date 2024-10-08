@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.christian</groupId>
-	<artifactId>time-connect</artifactId>
+	<artifactId>timetalk-api</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>time-connect</name>
 	<description>Demo project for Spring Boot</description>
