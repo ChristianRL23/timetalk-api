@@ -1,6 +1,7 @@
 package com.christian.time_connect.controllers;
 
 import com.christian.time_connect.dto.CommentRequest;
+import com.christian.time_connect.dto.CommentResponse;
 import com.christian.time_connect.dto.PostRequest;
 import com.christian.time_connect.dto.PostResponse;
 import com.christian.time_connect.entities.PostEntity;
@@ -43,9 +44,9 @@ public class PostController {
     }
 
     @PostMapping("/{postId}/comments")
-    public ResponseEntity<Long> addComment(
+    public ResponseEntity<CommentResponse> addComment(
             @PathVariable("postId") Long postId,
-            @RequestBody CommentRequest commentRequest,
+            @RequestBody @Valid CommentRequest commentRequest,
             Authentication authentication
     ) {
         return new ResponseEntity<>(commentService.createComment(postId, commentRequest, authentication), HttpStatus.CREATED);
