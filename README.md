@@ -5,6 +5,23 @@
 <p float="left">
   <img src="/images/TimeTalk.png" width="700" >
 </p>
+<p float="left">
+  <img src="/images/docker.png" width="700" >
+</p>
+
+## Used technologies
+- Java 22
+- Spring Boot 3
+- Spring Security
+- JWT
+- JPA/Hibernate
+- MySQL
+- Docker
+
+## Docker
+The API has been containerized using Docker. A Dockerfile and a docker-compose.yml file are included. Also, [the image is available on DockerHub](https://hub.docker.com/r/christian471/timetalk-api) under the name `christian471/timetalk-api`.
+
+## Features
 
 The features of the API are the next:
 - [Create an account](#signup)
@@ -20,14 +37,6 @@ The features of the API are the next:
   - [Remove like from post](#remove-like-post)
   - [Get basic user data](#get-profile)
 - Error handling (Exceptions)  
-
-## Used technologies
-- Java 22
-- Spring Boot 3
-- Spring Security
-- JWT
-- JPA/Hibernate
-- MySQL
 
 ## Endpoints
 
@@ -77,7 +86,7 @@ The features of the API are the next:
     - **Response Body**:
 ```json
 {
-  "email": "chris@mail.com",
+  "email": "christian@mail.com",
   "jwt": "JWT_TOKEN",
   "status": true,
   "message": "User logged successfully."
@@ -102,8 +111,8 @@ of the request. For example: `Authorization: Bearer YOUR_JWT_TOKEN`
         "lastName": "Doe"
       },
       "creationDate": "2024-10-08T08:00:51.492769",
-      "title": "My first post",
-      "description": "This is a post!",
+      "title": "What do you think of dive watches?",
+      "description": "I've always wanted a dive watch. Does anyone have recommendations or brands worth considering?",
       "likes": [],
       "comments": []
   },
@@ -114,8 +123,8 @@ of the request. For example: `Authorization: Bearer YOUR_JWT_TOKEN`
       "lastName": "Doe"
     },
     "creationDate": "2024-10-08T08:47:54.180589",
-    "title": "My second post",
-    "description": "This is a new post.",
+    "title": "What features do you value most in a watch?",
+    "description": "I'm trying to decide what to look for in my next watch. Is it the design, the mechanism, or perhaps water resistance?",
     "likes": [
       {
         "user": {
@@ -131,7 +140,7 @@ of the request. For example: `Authorization: Bearer YOUR_JWT_TOKEN`
           "lastName": "Ramírez"
         },
         "creationDate": "2024-10-08T08:48:50.231948",
-        "content": "Amazing!"
+        "content": "I personally prioritize the durability and water resistance. It's important for me to have a watch that can withstand everyday activities. What about others?"
       }
     ]
   }
@@ -146,8 +155,8 @@ of the request. For example: `Authorization: Bearer YOUR_JWT_TOKEN`
 - **Request Body**:
 ```json
 {
-  "title": "My new post",
-  "description": "This is a post!"
+  "title": "What do you think of dive watches?",
+  "description": "I've always wanted a dive watch. Does anyone have recommendations or brands worth considering?"
 }
 ```
 - **Response**:
@@ -161,8 +170,8 @@ of the request. For example: `Authorization: Bearer YOUR_JWT_TOKEN`
     "lastName": "Ramírez"
   },
   "creationDate": "2024-10-08T08:59:40.9176076",
-  "title": "My new post",
-  "description": "This is a post!",
+  "title": "What do you think of dive watches?",
+  "description": "I've always wanted a dive watch. Does anyone have recommendations or brands worth considering?",
   "likes": [],
   "comments": []
 }
@@ -176,8 +185,8 @@ of the request. For example: `Authorization: Bearer YOUR_JWT_TOKEN`
 - **Request Body**:
 ```json
 {
-  "title": "My post updated",
-  "description": "This post has been updated."
+  "title": "What features are essential for a dive watch?",
+  "description": "I’m interested in getting a dive watch, but I'm curious about what features really matter. Is it just about water resistance, or should I consider other factors like visibility and durability?"
 }
 ```
 - **Response**:
@@ -191,8 +200,8 @@ of the request. For example: `Authorization: Bearer YOUR_JWT_TOKEN`
     "lastName": "Ramírez"
   },
   "creationDate": "2024-10-08T09:08:18.681976",
-  "title": "My post updated",
-  "description": "This post has been updated!",
+  "title": "What features are essential for a dive watch?",
+  "description": "I’m interested in getting a dive watch, but I'm curious about what features really matter. Is it just about water resistance, or should I consider other factors like visibility and durability?",
   "likes": [],
   "comments": []
 }
@@ -216,7 +225,7 @@ of the request. For example: `Authorization: Bearer YOUR_JWT_TOKEN`
 - **Request Body**:
 ```json
 {
-  "content": "Amazing!"
+  "content": "I think visibility is crucial for a dive watch, especially in low-light conditions. A good bezel and clear markings can make a big difference underwater."
 }
 ```
 - **Response**:
@@ -229,7 +238,7 @@ of the request. For example: `Authorization: Bearer YOUR_JWT_TOKEN`
     "lastName": "Ramírez"
   },
   "creationDate": "2024-10-08T09:13:55.4522113",
-  "content": "Amazing!"
+  "content": "I think visibility is crucial for a dive watch, especially in low-light conditions. A good bezel and clear markings can make a big difference underwater."
 }
 ```
 
