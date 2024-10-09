@@ -1,7 +1,11 @@
-# TimeTalk API
+<h1 align="center">TimeTalk API</h1>
 
-TimeTalk API is a RESTFul API created to be used on TimeTalk, a social network (currently in development)
-to ask questions, share experiences and make comments about watches.
+*<p align="center">TimeTalk API is a RESTFul API created to be used in a social network to ask questions, share experiences and make comments.</p>*
+
+<p float="left">
+  <img src="/images/TimeTalk.png" width="700" >
+</p>
+
 The features of the API are the next:
 - [Create an account](#signup)
 - [Login](#login)
@@ -24,7 +28,6 @@ The features of the API are the next:
 - JWT
 - JPA/Hibernate
 - MySQL
-- Docker
 
 ## Endpoints
 
