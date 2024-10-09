@@ -1,0 +1,35 @@
+services:
+  timetalk-api:
+    image: timetalk-api
+    container_name: timetalk-api-container
+    environment:
+      DB_URL: jdbc:mysql://mysql_database:3306/timetalk_db?createDatabaseIfNotExist=true
+      DB_USERNAME: root
+      DB_PASSWORD: password
+
+    ports:
+      - "8080:8080"
+    networks:
+      - timetalk-api-network
+    depends_on:
+      - mysql
+
+  mysql:
+    image: mysql
+    container_name: mysql_database
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: timetalk_db
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+    ports:
+      - "3307:3306"
+    networks:
+      - timetalk-api-network
+    volumes:
+      - mysql-volume:/var/lib/mysql
+
+networks:
+  timetalk-api-network:
+volumes:
+  mysql-volume:
