@@ -46,9 +46,9 @@ public class TimeConnectApplication {
 					.build();
 
 			UserEntity userChristian = UserEntity.builder()
-					.firstName("Christian")
-					.lastName("R. Lara")
-					.email("christian@mail.com")
+					.firstName("John")
+					.lastName("Doe")
+					.email("john@mail.com")
 					.password("$2a$10$tbNIkKO4pr5FbyqIjOeRNODiJ/ffEU1v/tQJaXg7avqlr5tvMhzVq")
 					.isEnabled(true)
 					.accountNoExpired(true)
