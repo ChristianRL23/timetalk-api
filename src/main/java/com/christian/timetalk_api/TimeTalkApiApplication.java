@@ -15,10 +15,10 @@ import java.util.Set;
 
 @SpringBootApplication
 @EnableJpaAuditing
-public class TimeConnectApplication {
+public class TimeTalkApiApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(TimeConnectApplication.class, args);
+		SpringApplication.run(TimeTalkApiApplication.class, args);
 	}
 
 	@Bean
@@ -45,7 +45,7 @@ public class TimeConnectApplication {
 					.permissionList(Set.of(createPermission, readPermission, updatePermission, deletePermission))
 					.build();
 
-			UserEntity userChristian = UserEntity.builder()
+			UserEntity initialUser = UserEntity.builder()
 					.firstName("John")
 					.lastName("Doe")
 					.email("john@mail.com")
@@ -57,8 +57,7 @@ public class TimeConnectApplication {
 					.roles(Set.of(roleUser))
 					.build();
 
-			userRepository.save(userChristian);
+			userRepository.save(initialUser);
 		};
 	}
-
 }

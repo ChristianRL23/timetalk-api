@@ -1,12 +1,12 @@
 spring:
   jpa:
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: update
     show-sql: true
   datasource:
-    url: jdbc:mysql://localhost:3306/timetalk_api
-    username: root
-    password: password
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
     driver-class-name: com.mysql.cj.jdbc.Driver
   application:
     name: timetalk-api
@@ -14,6 +14,6 @@ spring:
 security:
   jwt:
     key:
-      private: 2dd57dfe27e671d7fad1d9517900518607dfb1d0a4718105b2e69986349d0a83
+      private: ${JWT_KEY_PRIVATE}
     user:
-      generator: AUTH0JWT-BACKEND
+      generator: ${JWT_USER_GENERATOR}

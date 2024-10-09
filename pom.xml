@@ -11,7 +11,7 @@
 	<groupId>com.christian</groupId>
 	<artifactId>timetalk-api</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>time-connect</name>
+	<name>timetalk-api</name>
 	<description>Demo project for Spring Boot</description>
 	<url/>
 	<licenses>
